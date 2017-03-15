@@ -61,16 +61,13 @@ if (isset($_POST['card'])){
     ");
 
   $statement->execute($donnee);
-  $message['success'][]='le client est bien ajouté';
+  $message['success'][]='le client a bien été ajouté';
   
 
   // INSERT INTO nomdelatable SET colonne=valeur//SET permet de cibler une colonne et une valeur
 
  }
-}else{
-  echo 'merde';
-  var_dump($message['danger']);
-}
+}else
 
   
 ?>
@@ -86,7 +83,7 @@ if (isset($_POST['card'])){
  <?php 
 
  foreach ($message as $key => $tableau) {
-  var_dump($tableau);
+
 
     foreach ($tableau as  $value) {
       echo '<li class="'.$key.'">'.$value.'</li>';

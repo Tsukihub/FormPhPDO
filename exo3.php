@@ -1,4 +1,77 @@
-<?php
+<?php 
+$message['danger'] =[];
+$message['success'] =[];
+if(isset($_POST) && !empty($_POST)){
+  $donnee=[];
+ if(isset($_POST['nom']) && $_POST['nom']!=''){
+    $donnee['lastName']= $_POST['nom'];
+ }else{
+  $message['danger'][] ='merci de renseigner un nom';
+ }
+ if (isset($_POST['prenom']) && $_POST['prenom']!=''){
+  $donnee['firstName']=$_POST['prenom'];
+ }else{
+  $message['danger'][] ='merci de renseigner un prenom';
+}
+if (isset($_POST['naissance']) && $_POST['naissance']!=''){
+  $donnee['birthDate']=$_POST['naissance'];
+ }else{
+  $message['danger'][] ='merci de renseigner une date de naissance';
+}  
+if (isset($_POST['card'])){
+  $donnee['card']=1;
+
+
+  if (isset($_POST['numeCard']) && $_POST['numeCard']!=''){
+    $donnee['cardNumber']=$_POST['numeCard'];
+  }else{
+    $message['danger'][] ='merci de renseigner numeCard';
+   
+  }  
+
+
+ }else{
+  $donnee['card']=0;
+  $donnee['cardNumber'] = null;
+
+
+}  
+  // var_dump($message['danger']);
+
+
+ if (empty($message['danger'])){
+
+
+
+  $pdo=new PDO (
+    'mysql:dbname=colyseum; 
+    host=localhost; 
+    charset=utf8', 
+    'root', 
+    '');
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+
+  $statement = $pdo->prepare("
+    INSERT INTO clients
+    SET lastName= :lastName,
+    firstName= :firstName,
+    birthDate= :birthDate,
+    card= :card,
+    cardNumber= :cardNumber
+    ");
+
+  $statement->execute($donnee);
+  $message['success'][]='le client a bien été ajouté';
+  
+
+  // INSERT INTO nomdelatable SET colonne=valeur//SET permet de cibler une colonne et une valeur
+
+ }
+}
+
+
+
 $pdo = new PDO('mysql:dbname=colyseum;host=localhost; charset=utf8', 'root', '');
 $pdo->setAttribute(
 	PDO::ATTR_ERRMODE, 
@@ -9,105 +82,83 @@ $pdo->setAttribute(
 
 $statement =$pdo->query('SELECT id, type FROM cardTypes');
 $typedecarte = $statement-> fetchall();
-//echo "<pre>";
-//var_dump($typedecarte);
-//echo "<pre>";
-//die()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<title>FORMULAIRE</title>
-		<link rel="stylesheet" type="text/css" href="style/style.css">
-	
+		
+<link rel="stylesheet" href="style/css/style.css">	
 </head>
 <body>
-<?php
-$erreur = [];
-if (isset($_POST) && !empty($_POST)) {
-	$donner=[];
-		if (isset($_POST["nom"]) && $_POST['nom']!='') {
-			$donner['lastname'] = $_POST["nom"];
-		}else{
-			$erreur[] = 'merci de mettre un nom';
-		}
-		if (isset($_POST["prenom"]) && $_POST['prenom']!='') {
-			$donner['firstName'] = $_POST["prenom"];
-		}else{
-			$erreur[] = 'merci de mettre un prenom';
-		}
-		if (isset($_POST["naissance"]) && $_POST['naissance']!='') {
-			$donner['birthDate'] = $_POST["naissance"];
-		}else{
-			$erreur[] = 'merci de mettre une date naissance';
-		}
-		if (isset($_POST["card"])) {
-			$donner['card'] = 1;
-		
-				if (isset($_POST["numeCard"])) {
-				$donner['cardNumber'] = $_POST["numeCard"];
-				}else{
-				$erreur[] = 'merci de mettre un numéro carte';
-				}
-		}else{
-			$donner['card'] = 0;
-			$donner['cardNumber'] = null;
-		}
-
-		if (empty($erreur)) {
-			/*INSERT TO INTO nomdelatable SET*/
-			$statement = $pdo->prepare("
-				INSERT INTO clients
-				SET lastname = :lastname,
-				firstName = :firstName,
-				birthDate = :birthDate,
-				card = :card,
-				cardNumber = :cardNumber");
-/*			echo "<pre>";
-var_dump($donner);*/
-			$statement->execute($donner);
-$erreur[] = "<div class='list-group-item list-group-item-success'>le client est bien ADD'</div>";
-			
-		}
-	}
-/*if (isset($_POST["name"],$_POST["prenom"],$_POST["naissance"],$_POST["card"])) {
-	$nom = $_POST["name"];
-	$prenom = $_POST["prenom"];
-	$card = $_POST["card"];
-	echo "post effectué";
-}*/
-?>
-<h1> Ajout de client </h1>
-<nav class="navbar navbar-inverse">
-  ...
-</nav>
 
 
 
 
 
-<?php foreach ($erreur as $value) {
-	echo "<li class='list-group-item list-group-item-danger'> $value <li> <br>" ;
+
+
+
+ <?php 
+
+ foreach ($message as $key => $tableau) {
+
+    foreach ($tableau as  $value) {
+      echo '<li class="'.$key.'">'.$value.'</li>';
+     
+    }
 }
-?>
 
-<form method="post" action="">
-	<input type="text" name="nom" placeholder="nom">
-	<input type="text" name="prenom" placeholder="prenom">
-	<input type="date" name="naissance">
-	<label for="card"> le client veut il une carte de fidélité</label> <!-- pour mettre un texte devant checkbox-->
-	<input type="checkbox" name="card" id="card">
-	<FORM>
-		<select type="typedecarte" name="typecarte" size="1">
-		<?php foreach ($typedecarte as $value) {
-			echo '<OPTION valeur="'.$value->id.'">'.$value->type.'</OPTION>';
-		} 
-		?>
-		</SELECT>
-	</FORM>
-	<input type="number" name="numeCard" placeholder="numéro de la carte">
-	<button type="submit">Ok</button>
-</form>
+ ?>
+
+
+
+
+     <form action="" method="post">
+          <fieldset>
+            <legend>Inscription du client</legend>
+    <!-- 
+                <label for="nom">Nom :</label>  -->
+                <input type="text" name="nom" placeholder="Nom" />
+         <!--        <label for="prenom">Prénom :</label>  -->
+                <input type="text" name="prenom" placeholder="Prenom" /> 
+               <!--  <label for="naissance">Date de naissance :</label>  -->
+                <input type="date" name="naissance"  placeholder="aaaa-mm-jj">
+           
+                <label for="Card">Carte de fidélité ?</label><input type="checkbox" name="card" id="Card"/> 
+                <select type="typedecarte" name="typecarte" size="1" class="hidden">
+                	<option value="">choississez un type de carte</option>
+					<?php foreach ($typedecarte as $value) {
+
+						echo '<OPTION value="'.$value->id.'">'.$value->type.'</OPTION>';
+					} 
+					?>
+				</select>
+                 <input type="number" name="numeCard" placeholder="Numéro de carte" /> 
+               
+               <button type="submit">ok</button>
+          </fieldset>
+    </form>
 </body>
 </html>

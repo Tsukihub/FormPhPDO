@@ -3,18 +3,39 @@ input[type="number"] {
   input[type="checkbox"]:checked ~ input[type="number"] {
     display: inline; }
 
-.radio {
+.hidden {
   display: none; }
-  input[type="checkbox"]:checked ~ .radio {
+  input[type="checkbox"]:checked ~ .hidden {
     display: inline; }
 
 li.danger {
-  color: red; }
+  color: white;
+  text-align: center;
+  line-height: 20px;
+  background-color: red;
+  list-style: none;
+  opacity: 0.5; }
 li.success {
-  color: green; }
+  color: white;
+  text-align: center;
+  line-height: 20px;
+  background-color: green;
+  list-style: none;
+  opacity: 0.5; }
 
-body {
-  background-color: grey; }
-
-fieldset {
-  border-color: lime; }
+body form {
+  margin: 150px auto; }
+  body form fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 50%;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: #3F44B9;
+    color: white;
+    border-color: lime; }
+    body form fieldset legend {
+      background-color: lime;
+      color: grey; }

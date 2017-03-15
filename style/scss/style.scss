@@ -7,7 +7,7 @@
 	}
 } 
 
-.radio{
+.hidden{
 	display: none;
 
 	input[type="checkbox"]:checked ~ &{
@@ -24,18 +24,42 @@
 
 li{
 	&.danger{
-		color : red;
+		color : white;
+		text-align: center;
+		line-height: 20px;
+		background-color: red;
+		list-style: none;
+		opacity: 0.5;
 	}
 	&.success{
-		color : green;
+		color : white;
+		text-align: center;
+		line-height: 20px;
+		background-color: green;
+		list-style: none;
+		opacity: 0.5;
 	}
 }
 
 
 body{
-	background-color: grey;
-}
-
-fieldset{
-	border-color:  lime;
+	form{
+		margin: 150px auto;
+		fieldset{
+			display: flex;
+			flex-direction: column;
+			margin: auto;
+			max-width: 50%;
+			justify-content: center;
+			text-align: center;
+			align-items: center;
+			background-color: #3F44B9;
+			color : white;
+			border-color:  lime;
+			legend{
+				background-color: lime;
+				color :grey;
+			}
+		}
+	}
 }
