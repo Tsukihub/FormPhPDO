@@ -1,0 +1,20 @@
+input[type="number"] {
+  display: none; }
+  input[type="checkbox"]:checked ~ input[type="number"] {
+    display: inline; }
+
+.radio {
+  display: none; }
+  input[type="checkbox"]:checked ~ .radio {
+    display: inline; }
+
+li.danger {
+  color: red; }
+li.success {
+  color: green; }
+
+body {
+  background-color: grey; }
+
+fieldset {
+  border-color: lime; }
