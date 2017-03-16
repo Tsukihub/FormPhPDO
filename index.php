@@ -10,7 +10,7 @@
 	<a href='ex1.php'>ex1</a>
 	
 	<a href='exo3.php'>ex3</a>
-	<a href='exo4.php'>ex4</a>
+	<a href='correctionselectiondynamiquesousmenujsecritparphp.php'>correction selection dynamique sous menu js ecrit par php</a>
 	<a href='formulaire.php'>formulaire ajout client</a>
 	</body>
 	</html>	

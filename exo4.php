@@ -10,14 +10,14 @@ $pdo->setAttribute(
 $statement =$pdo->query('SELECT id, type FROM showTypes');
 $typedeshow = $statement-> fetchAll();
 
-$statement =$pdo->query('SELECT showTypes.id, genres.genre, genres.showTypesId FROM genres, showTypes WHERE showTypes.id=genres.showTypesId');
+$statement =$pdo->query('SELECT id, genre,showTypesId FROM genres, showTypes WHERE genres');
 $genre = $statement-> fetchAll();
 
 
 
 
 
-
+/////////////////////////à modifier avec les posts correspondant aux spectacles récupérer version fonctionnelle//////////////////////////
 $erreur = [];
 if (isset($_POST) && !empty($_POST)) {
 	$donner=[];
@@ -54,12 +54,13 @@ if (isset($_POST) && !empty($_POST)) {
 			$statement = $pdo->prepare("
 				INSERT INTO shows
 				SET 
-				id = :id,
+			
 				title = :title,
+				performer = :artiste;
 				date = :date,
 				showTypesId = :showTypesId,
 				firstGenresId = :firstGenresId,
-				secondGenreId = : secondGenreId,
+				secondGenresId = : secondGenreId,
 				duration = : duration,
 				startTime = : startTime 
 				");
@@ -131,12 +132,10 @@ $erreur[] = "<div class='list-group-item list-group-item-success'>le client est 
                 </select>
 
                  <select name="genre1">
+                <option value="">choisir caté un</option>
       				
-                    <?php foreach ($genre as $value) {
-                	  echo '<OPTION valeur="'.$value->id.'">'.$value->genre.'</OPTION>';
-                }
-                	
-				?>
+                
+			
                 </select>
 
                 <select name="genre2">
@@ -153,10 +152,73 @@ $erreur[] = "<div class='list-group-item list-group-item-success'>le client est 
                 <label for="Card">Carte de fidélité ?</label><input type="checkbox" name="card" id="Card"/> 
                  <input type="number" name="numeCard" placeholder="Numéro de carte" /> 
                  <input type="time" name="duree"/>
+                 <input type="time" name="durée" step="1"/>
+                 
+
+
+
+
+
+
+
                   <input type="time" name="start" placeholder="Heure de débu/>
                
+              
+
+
+
+
+
+
                <button type="submit">ok</button>
           </fieldset>
     </form>
   </body>
 </html>
+
+/////////////////////////////////algo js pour afficher genre correspondant au type///////////////////////////////////////////
+onchange sur select showtype qui aple choix avec comme argument this.form
+
+
+function choix(form){
+i=form.showtype.seclectIndex
+if(i==0){
+	return;
+}
+switch(i){
+
+//////////////////////////////////////////////////////////////////génération array js par php///////////////////
+<?php foreach ($typeShow as $value) {
+	$ligne ="case".value->id." : var txt = new Array (";
+	foreach ($categories as $categorie) {
+		if value->id == categorie->showTypesId){
+	$ligne.="['".$categorie->id"','".$categorie->genre."'],";
+
+}
+	}
+	$ligne=substr($ligne, 0, -1).");break;\n";
+	echo $ligne;
+
+
+	case 1 : var txt = new Array (['1', genre1], ['2', 'genre2'].....);/////new array
+	break;
+	case 2 : var txt = new array(['1', genre1], ['2', 'genre2']);
+	break;
+	case 3 : var txt = new array(['1', genre1], ['2', 'genre2']);
+	break;
+	case 4 : var txt = new array(['1', genre1], ['2', 'genre2']);
+	break;
+	
+/////////////////////genre un généré par php
+	form.genre1.innerHTML ='op'
+}	boucle sur array 
+	txt[i][0]+tx[i][1]
+
+
+/////idem genre 2
+
+
+
+
+
+}////end choix
